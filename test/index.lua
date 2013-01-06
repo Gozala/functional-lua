@@ -1,0 +1,6 @@
+require("./apply")
+require("./compose")
+require("./memoize")
+require("./once")
+require("./partial")
+require("./wrap")

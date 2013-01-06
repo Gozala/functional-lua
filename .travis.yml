@@ -1,0 +1,11 @@
+before_script:
+  - echo "Install luvit..."
+  - git clone --depth=1 --quiet https://github.com/luvit/luvit.git
+  - cd luvit
+  - echo "Building luvit..."
+  - make
+  - sudo make install
+  - cd ../
+
+script:
+  - luvit ./test/index.lua
