@@ -1,3 +1,4 @@
+local table = require("table")
 local apply = require("./apply")
 
 return function(lambda, ...)
@@ -13,10 +14,11 @@ return function(lambda, ...)
       inc(5) // => 6
   ]]--
 
-  local curried = {...}
+  local curried = table.pack(...)
+  local offset = curried.n
   return function(...)
-    local params = {unpack(curried)}
-    params[#params + 1] = {...}
-    return apply(lambda, unpack(params))
+    local params = {unpack(curried, 1, offset)}
+    params[offset + 1] = table.pack(...)
+    return apply(lambda, unpack(params, 1, offset + 1))
   end
 end

@@ -1,3 +1,5 @@
+local table = require("table")
+
 return function(lambda, wrapper)
   --[[
   Returns the first function passed as an argument to the second,
@@ -14,6 +16,7 @@ return function(lambda, wrapper)
       greet() // => "before, hello: moe, after"
   ]]--
   return function(...)
-    return wrapper(unpack({lambda, ...}))
+    local params = table.pack(...)
+    return wrapper(unpack({lambda, ...}, 1, params.n + 1))
   end
 end

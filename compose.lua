@@ -1,3 +1,5 @@
+local table = require("table")
+
 return function(...)
   --[[
   Returns the composition of a list of functions, where each function
@@ -15,12 +17,13 @@ return function(...)
   ]]--
 
   local lambdas = {...}
+  local count = #lambdas
   return function(...)
-    local count = #lambdas
-    local state = {...}
-    while count > 0 do
-      state = { lambdas[count](unpack(state)) }
-      count = count - 1
+    local state = table.pack(...)
+    local index = count
+    while index > 0 do
+      state = { lambdas[index](unpack(state)) }
+      index = index - 1
     end
     return unpack(state)
   end
